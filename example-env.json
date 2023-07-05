@@ -1,0 +1,7 @@
+{ 
+    "clientID": "<CLIENT OR APP ID>",
+    "authorityBase": "https://login.microsoftonline.com/",
+    "tenantID": "<MICROSOFT TENANT ID>",
+    "resourceURI": "https://<BASE DYNAMICS INSTANCE URL>/",
+    "scopeSuffix": "user_impersonation"
+}
