@@ -1,19 +1,19 @@
 # pip install pandas # if needed
 
 import pandas as pd
-import AuthWithMSAL
+import authenticate_with_msal
 
 # Parameters
 entity_m = 'systemusers'
 entity_n = 'teams'
 m_to_n_relationship = 'teammembership_association'
-path_to_csv = 'M to N.csv' 
+path_to_csv = 'data/M to N.csv' 
 # Column names in CSV must match entity_m and entity_n above
 
 # Getting access token.
-authentication = AuthWithMSAL.getAuthenticatedSession("env.json")
+authentication = authenticate_with_msal.getAuthenticatedSession("env.json")
 session = authentication[0]
-resourceURI = authentication[1]
+environmentURI = authentication[1]
 
 # reading the CSV
 df = pd.read_csv(path_to_csv)
@@ -26,8 +26,8 @@ for index, row in df.iterrows():
     record_m = row[entity_m]
     record_n = row[entity_n]
     
-    request_uri = f'{resourceURI}api/data/v9.2/{entity_m}({record_m})/{m_to_n_relationship}/$ref'
-    odata_id = f'{resourceURI}api/data/v9.2/{entity_n}({record_n})'
+    request_uri = f'{environmentURI}api/data/v9.2/{entity_m}({record_m})/{m_to_n_relationship}/$ref'
+    odata_id = f'{environmentURI}api/data/v9.2/{entity_n}({record_n})'
     post_json = { "@odata.id": odata_id }
 
     r = session.post(request_uri, json = post_json)

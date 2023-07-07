@@ -11,8 +11,8 @@ def getAuthenticatedSession(envJson: str):
 
     config = json.load(open("env.json"))
 
-    resourceURI = config["resourceURI"]
-    scope = [resourceURI + config["scopeSuffix"]]
+    environmentURI = config["environmentURI"]
+    scope = [environmentURI + '/' + config["scopeSuffix"]]
     clientID = config["clientID"]
     authority = config["authorityBase"] + config["tenantID"]
 
@@ -49,10 +49,9 @@ def getAuthenticatedSession(envJson: str):
         session.headers.update(dict(Authorization='Bearer {}'.format(result['access_token'])))
         session.headers.update({'OData-MaxVersion': '4.0', 'OData-Version': '4.0', 'If-None-Match': 'null', 'Accept': 'application/json'})
 
-        return session, resourceURI
+        return session, environmentURI
 
     else:
         print(result("error"))
         print(result("error_description"))
         print(result("correlation_id"))
-
