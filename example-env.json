@@ -1,7 +1,7 @@
 { 
     "clientID": "<CLIENT OR APP ID>",
     "tenantID": "<MICROSOFT TENANT ID>",
-    "environmentURI": "https://<BASE DYNAMICS INSTANCE URL>",
+    "environmentURI": "https://<BASE DYNAMICS INSTANCE URL>/",
     "authorityBase": "https://login.microsoftonline.com/",
     "scopeSuffix": "user_impersonation"
 }
