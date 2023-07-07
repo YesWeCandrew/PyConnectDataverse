@@ -1,8 +1,15 @@
-# M2N Relationship Dataverse Import
+# PyConnectDataverse
 
-This Python program enables the quick binding of two records in an Many-to-Many relationship in Dataverse. This can streamline and automate the process of linking relationships, which is time-consuming when done manually.
+This Python program enables easy connection to the [oData Web API](https://learn.microsoft.com/en-us/power-apps/developer/data-platform/webapi/overview) for Dynamics, Power Apps and Dataverse.
 
-The program requires a CSV files with the GUID of the two records to be linked. An Azure Application with access to Dynamics is required to authorise the app. Authorisation details are stored in a env.json file an example is saved in example-env.json.
+In addition, example functions have been prepared that enable users to:
+- Bind two records in an Many-to-Many relationship in Dataverse. This can streamline and automate the process of linking relationships, which is time-consuming when done manually.
+- Download data from Dataverse in JSON format
+- Add new options to an existing option set
+
+Many more functions are possible. Anything that can be done with the Dataverse Web API can be done in Python here. Use any of pcd python files as a template to get an authenticated session with the API and then make requests over HTTPs as needed. Basic operations can be found [here](https://learn.microsoft.com/en-us/power-apps/developer/data-platform/webapi/web-api-basic-operations-sample).
+
+An Azure Application with access to Dynamics is required to authorise the app. Authorisation details are stored in a env.json file an example is saved in example-env.json.
 
 A blog explaining the program will be available on my website shortly. In the meantime, I recommend the following sources, which I used to create the program:
 
