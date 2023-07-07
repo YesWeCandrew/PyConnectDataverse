@@ -1,3 +1,2 @@
-.env
-env.json
+envs/*
 __pycache__/*
