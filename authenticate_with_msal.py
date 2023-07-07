@@ -9,7 +9,7 @@ import logging
 
 def getAuthenticatedSession(envJson: str):
 
-    config = json.load(open("env.json"))
+    config = json.load(open(envJson))
 
     environmentURI = config["environmentURI"]
     scope = [environmentURI + '/' + config["scopeSuffix"]]

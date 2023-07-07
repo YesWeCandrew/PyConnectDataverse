@@ -4,14 +4,12 @@ import pandas as pd
 import authenticate_with_msal
 
 # Parameters
-PathToEnvironmentJSON = "env.json"
-PathToOptionSetCSV = "data/OptionsToAdd.csv"
+PathToEnvironmentJSON = "example-env.json"
+PathToOptionSetCSV = "data\OptionsToAdd.csv"
 ValueOfFirstAddedOption = 201300004
 OptionSetLogicalName = "OPTION SET NAME"
 LanguageCode = 1033
 UniqueSolutionName = "SOLUTION NAME"
-
-# Column names in CSV must match entity_m and entity_n above
 
 # Getting access token.
 authentication = authenticate_with_msal.getAuthenticatedSession(PathToEnvironmentJSON)
