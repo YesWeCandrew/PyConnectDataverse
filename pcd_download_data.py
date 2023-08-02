@@ -2,7 +2,7 @@ import authenticate_with_msal
 import json
 
 # Parameters
-PathToEnvironmentJSON = "envs/development.json"
+PathToEnvironmentJSON = "example-env.json"
 EntityToDownload = "systemusers"
 
 # Getting access token.
