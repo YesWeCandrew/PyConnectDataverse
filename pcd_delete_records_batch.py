@@ -5,8 +5,6 @@ import time
 import uuid
 from requests import Request
 
-# Known issue: the last record in the batch will fail to import. I am still determining the cause of this.
-
 # Parameters
 PathToEnvironmentJSON = "example-env.json"
 EntityOfRecordsToDelete = "contacts"
@@ -66,13 +64,12 @@ while first < len(df.index):
 Content-Type: application/http
 Content-Transfer-Encoding: binary
 
-PATCH """ + request_uri + "(" + guid + ")" + """ HTTP/1.1
+DELETE """ + request_uri + "(" + guid + ")" + """ HTTP/1.1
 Content-Type: application/json
-If-Match: *
 
 """
 
-        body = body + request + json.dumps(record)
+        body = body + request
 
     body = (body + "\n" + boundary + "--").encode()
 
