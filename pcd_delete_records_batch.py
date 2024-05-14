@@ -58,7 +58,6 @@ while first < len(df.index):
 
     for index, row in requestdf.iterrows():
         guid = row['GUID']
-        record = records[index % len(requestdf.index)]
 
         request = boundary + """
 Content-Type: application/http
