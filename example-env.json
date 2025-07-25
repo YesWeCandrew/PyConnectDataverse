@@ -1,5 +1,5 @@
 { 
-    "clientID": "<CLIENT OR APP ID>",
+    "clientID": "51f81489-12ee-4a9e-aaae-a2591f45987d",
     "tenantID": "<MICROSOFT TENANT ID>",
     "environmentURI": "https://<BASE DYNAMICS INSTANCE URL>/",
     "authorityBase": "https://login.microsoftonline.com/",
