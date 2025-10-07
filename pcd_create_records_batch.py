@@ -1,9 +1,10 @@
-import authenticate_with_msal
-import json
-import pandas as pd
 import time
 import uuid
+import json
+import pandas as pd
 from requests import Request
+from utils.session_manager import SessionManager
+from utils.dynamics_config import get_config
 
 # Imports using the batch function which is faster for big imports
 # https://learn.microsoft.com/en-us/power-apps/developer/data-platform/webapi/execute-batch-operations-using-web-api
@@ -15,7 +16,7 @@ from requests import Request
 #   Wrap each GUID in the logical name of the entity it references for example: accounts(GUID)
 
 # Parameters
-PathToEnvironmentJSON = "example-env.json"
+PathToDotEnv = "env.example"
 EntityBeingAddedTo = "contacts"
 PathToCSVOfRecords = "data\pcd_create_records.csv"
 BatchSize = 500 # can be up to 1000 requests per batch
@@ -27,15 +28,16 @@ dtypes = {
     "firstname": "object"
 }
 
-# Getting access token.
-authentication = authenticate_with_msal.getAuthenticatedSession(PathToEnvironmentJSON)
-session = authentication[0]
-environmentURI = authentication[1]
+# Getting authenticated Requests object.
+config = get_config(PathToDotEnv)
+manager = SessionManager(config)
+session = manager.get_authenticated_session()
+
 # choose how you would like to act on errors
 session.headers.update({"Prefer" : "odata.continue-on-error"})
 
 # the post uri
-batch_uri = f'{environmentURI}api/data/v9.2/$batch'
+batch_uri = f'{config.api_base_url}$batch'
 request_uri = f'/api/data/v9.2/{EntityBeingAddedTo}'
 
 base_preamble = """

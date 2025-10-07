@@ -1,19 +1,20 @@
 # pip install pandas # if needed
 
 import pandas as pd
-import authenticate_with_msal
 import json
+from utils.session_manager import SessionManager
+from utils.dynamics_config import get_config
 
 # Parameters
-PathToEnvironmentJSON = "example-env.json"
+PathToDotEnv = "env.example"
 EntityBeingAddedTo = "contacts"
 PathToCSVOfRecords = "data\pcd_update_records.csv"
 # Column names in CSV must match EntityM and EntityN above
 
-# Getting access token.
-authentication = authenticate_with_msal.getAuthenticatedSession(PathToEnvironmentJSON)
-session = authentication[0]
-environmentURI = authentication[1]
+# Getting authenticated Requests object.
+config = get_config(PathToDotEnv)
+manager = SessionManager(config)
+session = manager.get_authenticated_session()
 session.headers.update({'If-Match': '*'})
 
 # reading the CSV
@@ -27,7 +28,7 @@ expected_updates = len(df)
 for index, row in df.iterrows():
     
     guid = row['GUID']
-    request_uri = f'{environmentURI}api/data/v9.2/{EntityBeingAddedTo}({guid})'
+    request_uri = f'{config.api_base_url}{EntityBeingAddedTo}({guid})'
     post_json = records[index]
 
     r = session.patch(request_uri, json = post_json)

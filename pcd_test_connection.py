@@ -1,15 +1,16 @@
-import authenticate_with_msal
+from utils.session_manager import SessionManager
+from utils.dynamics_config import get_config
 
 # Parameters
-PathToEnvironmentJSON = "example-env.json"
+PathToDotEnv = "env.example"
 
-# Getting access token.
-authentication = authenticate_with_msal.getAuthenticatedSession(PathToEnvironmentJSON)
-session = authentication[0]
-environmentURI = authentication[1]
+# Getting authenticated Requests object.
+config = get_config(PathToDotEnv)
+manager = SessionManager(config)
+session = manager.get_authenticated_session()
 
 # a test request to the URI
-request_uri = f'{environmentURI}api/data/v9.2/systemusers?$top=1&$select=internalemailaddress'
+request_uri = f'{config.api_base_url}WhoAmI'
 
 r = session.get(request_uri)
 

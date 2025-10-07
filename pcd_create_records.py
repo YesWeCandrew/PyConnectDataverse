@@ -1,11 +1,12 @@
-import authenticate_with_msal
 import json
 import pandas as pd
 import time
-from requests import Request, Session 
+from requests import Request
+from utils.session_manager import SessionManager
+from utils.dynamics_config import get_config
 
 # Parameters
-PathToEnvironmentJSON = "example-env.json"
+PathToDotEnv = "env.example"
 EntityBeingAddedTo = "contacts"
 PathToCSVOfRecords = "data\pcd_create_records.csv"
 AttributesToReturn = "?$select=lastname" # optionally include the attributes to return, otherwise all are returned
@@ -22,14 +23,14 @@ df = pd.read_csv(PathToCSVOfRecords, dtype = dtypes)
 
 records = json.loads(df.to_json(orient = "records"))
 
-# Getting access token.
-authentication = authenticate_with_msal.getAuthenticatedSession(PathToEnvironmentJSON)
-session = authentication[0]
-environmentURI = authentication[1]
+# Getting authenticated Requests object.
+config = get_config(PathToDotEnv)
+manager = SessionManager(config)
+session = manager.get_authenticated_session()
 session.headers.update({"Prefer" : "return=representation"})
 
 # the post uri
-request_uri = f'{environmentURI}api/data/v9.2/{EntityBeingAddedTo}{AttributesToReturn}'
+request_uri = f'{config.api_base_url}{EntityBeingAddedTo}{AttributesToReturn}'
 
 row = 0
 successful_updates = 0

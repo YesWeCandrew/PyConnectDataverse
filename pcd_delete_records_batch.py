@@ -1,25 +1,27 @@
-import authenticate_with_msal
 import json
 import pandas as pd
 import time
 import uuid
 from requests import Request
+from utils.session_manager import SessionManager
+from utils.dynamics_config import get_config
 
 # Parameters
-PathToEnvironmentJSON = "example-env.json"
+PathToDotEnv = "env.example"
 EntityOfRecordsToDelete = "contacts"
 PathToCSVOfRecords = "data\pcd_delete_records.csv"
 BatchSize = 950
 
-# Getting access token.
-authentication = authenticate_with_msal.getAuthenticatedSession(PathToEnvironmentJSON)
-session = authentication[0]
-environmentURI = authentication[1]
+# Getting authenticated Requests object.
+config = get_config(PathToDotEnv)
+manager = SessionManager(config)
+session = manager.get_authenticated_session()
+
 # choose how you would like to act on errors
 session.headers.update({"Prefer" : "odata.continue-on-error"})
 
 # the post uri
-batch_uri = f'{environmentURI}api/data/v9.2/$batch'
+batch_uri = f'{config.api_base_url}$batch'
 request_uri = f'/api/data/v9.2/{EntityOfRecordsToDelete}'
 
 # read the CSV and convert to dataframe
